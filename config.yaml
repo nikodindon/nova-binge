@@ -1,0 +1,24 @@
+# nova-binge configuration
+# Phase 1: Windows Host
+
+# Windows host IP (reachable from WSL)
+windows_host: "172.20.16.1"
+
+radarr:
+  url: "http://172.20.16.1:7878"
+  api_key: "d04fcfd4117e4e48b7b1da6ef9492dc7"
+
+sonarr:
+  url: "http://172.20.16.1:8989"
+  api_key: "181f85e685814d9d945f1e7936d33d88"
+
+prowlarr:
+  url: "http://172.20.16.1:9696"
+  api_key: "3fd232d4264244f092da856c9ea3772c"
+
+qbittorrent:
+  url: "http://172.20.16.1:8080"
+  username: "admin"
+  password: "adminadmin"
+  # Default download paths on Windows
+  downloads_path: "C:/Users/niko/Downloads"
