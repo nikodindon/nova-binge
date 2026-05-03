@@ -19,6 +19,6 @@ prowlarr:
 qbittorrent:
   url: "http://172.20.16.1:8080"
   username: "admin"
-  password: "adminadmin"
+  password: "olitec"
   # Default download paths on Windows
   downloads_path: "C:/Users/niko/Downloads"

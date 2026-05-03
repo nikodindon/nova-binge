@@ -195,7 +195,7 @@ class NovaBinge:
         # Extract SID from Set-Cookie header
         cookie_header = login_resp.headers.get("Set-Cookie", "")
         if "SID=" in cookie_header:
-            sid = cookie_resp.cookies.get("SID")
+            sid = login_resp.cookies.get("SID")
             return sid
         return None
     
@@ -265,10 +265,16 @@ class NovaBinge:
         
         # qBittorrent
         try:
-            # Need to use Basic Auth for qBittorrent
-            self.session.auth = (self.qbit_user, self.qbit_pass)
-            r = self.session.get(f"{self.qbit_url}/api/v2/app/version")
-            status["qbittorrent"] = "OK" if r.status_code == 200 else f"Error {r.status_code}"
+            # qBittorrent requires form-based login
+            login_resp = self.session.post(
+                f"{self.qbit_url}/api/v2/auth/login",
+                data={"username": self.qbit_user, "password": self.qbit_pass}
+            )
+            if login_resp.text == "Ok.":
+                r = self.session.get(f"{self.qbit_url}/api/v2/app/version")
+                status["qbittorrent"] = "OK" if r.status_code == 200 else f"Error {r.status_code}"
+            else:
+                status["qbittorrent"] = "Login failed"
         except Exception as e:
             status["qbittorrent"] = f"Failed: {e}"
         
